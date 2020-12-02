@@ -1,0 +1,8 @@
+//先导入再使用，有先后顺序
+//重置浏览器的默认全局样式
+@import './reset.scss';
+//主题的css样式
+// @import './theme.scss';
+body{
+    background-color:orange;
+}
