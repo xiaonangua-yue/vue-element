@@ -1,5 +1,5 @@
 //path  common.js
-const cons = require("consolidate")
+// const cons = require("consolidate")
 const path=require("path")
 console.log('项目的绝对路径',__dirname)//C:\Users\小南瓜`\Desktop\vue-element
 console.log('项目中某个目录的绝对路径',path.resolve(__dirname,'./src/components'))//C:\Users\小南瓜`\Desktop\vue-element\src\components
@@ -22,6 +22,7 @@ module.exports  = {
         config.resolve={
             //配置目录的别名
             alias:{
+                "@":path.resolve(__dirname,'./src'),
                 "@c":path.resolve(__dirname,'./src/components'), //path.resolve() 方法会将路径或路径片段的序列解析为绝对路径
                 "@a":path.resolve(__dirname,'./src/assets'),
                 "@p":path.resolve(__dirname,'./public'),
