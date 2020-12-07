@@ -24,7 +24,7 @@
                             <el-input id="code" v-model="ruleForm.code"></el-input>
                         </el-col>
                         <el-col :span="9">
-                            <el-button type="success" class="block" @click="getCode">获取验证码</el-button>
+                            <el-button type="success" class="block">获取验证码</el-button>
                         </el-col>
                     </el-row>
                 </el-form-item>
@@ -38,24 +38,12 @@
 
 <script>
 import valueDefaults from '@/utils/validate.js'//导入全部过滤特殊字符
-import {onMounted,reactive,ref} from '@vue/composition-api'//导入vue3.0
-import {get_code} from '@/api/login.js'//导入axios
-
 export default {
-    setup(prop,{refs,root}){
-/////////////////////生命周期//////////////////
-    // onMounted(()=>{
-    //     get_code().then((res)=>{//监听事件
-    //         console.log(res);
-    //     }).catch((err)=>{
-    //         console.log("请求错误了",err);
-    //     })
-    // })
-    //---------------data----------------
-    //验证码
-        let validateCode = (rule, value, callback) => {
+    data(){
+        //验证码
+        var validateCode = (rule, value, callback) => {
             // console.log(validate_inputValue(value));
-            ruleForm.code = value = valueDefaults.validate_inputValue(value,'code');
+            this.ruleForm.code = value = valueDefaults.validate_inputValue(value,'code');
             if (!value) {
                 return callback(new Error('验证码不能为空'));
             }else if(valueDefaults.test_code(value)){
@@ -65,8 +53,8 @@ export default {
             }
         };
         //验证邮箱
-        let validateUsername = (rule, value, callback) => {
-            ruleForm.username = value = valueDefaults.validate_inputValue(value,'email');
+        var validateUsername = (rule, value, callback) => {
+            this.ruleForm.username = value = valueDefaults.validate_inputValue(value,'email');
             if (value === '') {
                 callback(new Error('请输入邮箱'));
             // } else if(!reg.test(value)){
@@ -77,11 +65,11 @@ export default {
             }
         };
         //验证密码
-        let validatePassword = (rule, value, callback) => {
+        var validatePassword = (rule, value, callback) => {
             //验证的字段，输入的值，验证后做的事（回调函数）
             // console.log('rule',rule)
             // console.log('value',value)
-            ruleForm.password = value = valueDefaults.validate_inputValue(value,'password');
+            this.ruleForm.password = value = valueDefaults.validate_inputValue(value,'password');
             if (value === '') {
                 //错误了
                 callback(new Error('请输入密码'));
@@ -93,96 +81,68 @@ export default {
             }
         };
         //验证重复密码
-        let validatePasswordb = (rule, value, callback) => {
-            if(mode.value=='login'){
+        var validatePasswordb = (rule, value, callback) => {
+            if(this.mode=='login'){
                 callback()
                 return
             }//如果在登录界面时调用后return终止确认密码的操作框，确认密码框display="none"只是用v-show隐藏了此元素
             console.log("验证重复密码")
-            ruleForm.passwordb = value = valueDefaults.validate_inputValue(value,'passwordb');
-            if (value !== ruleForm.password){
+            this.ruleForm.passwordb = value = valueDefaults.validate_inputValue(value,'passwordb');
+            if (value !== this.ruleForm.password){
                 callback(new Error('两次密码不一致'));
             } else {
                 callback();
             }
         };
-        //定义tab切换模式
-        const mode=ref('login')
-        //定义表单的相关数据
-        const menuTab=reactive([
-            {txt:"登录",current:true,type:'login'},
-            {txt:"注册",current:false,type:'register'}
-        ])
-        //input绑定的数据
-        const ruleForm=reactive({
-            username: '',
-            password: '',
-            passwordb:'',
-            code: ''
-        })
-        //密码校验方式
-        const rules=reactive({
-            username: [
-                { validator: validateUsername, trigger: 'blur' }
+        return{
+            mode:'login',
+            menuTab:[
+                {txt:"登录",current:true,type:'login'},
+                {txt:"注册",current:false,type:'register'}
             ],
-            password: [
-                { validator: validatePassword, trigger: 'blur' }
-            ],
-            passwordb: [
-                { validator: validatePasswordb, trigger: 'blur' }
-            ],
-            code: [
-                { validator: validateCode, trigger: 'blur' }
-            ]
-        })
-    //---------------methods----------------
+            //input绑定的数据
+            ruleForm: {
+                username: '',
+                password: '',
+                passwordb:'',
+                code: ''
+            },
+            //密码校验方式
+            rules: {
+                username: [
+                    // trigger: 'blur'失去焦点时触发
+                    { validator: validateUsername, trigger: 'blur' }
+                ],
+                password: [
+                    { validator: validatePassword, trigger: 'blur' }
+                ],
+                passwordb: [
+                    { validator: validatePasswordb, trigger: 'blur' }
+                ],
+                code: [
+                    { validator: validateCode, trigger: 'blur' }
+                ]
+            }
+        }
+    },
+    methods:{
+        toggleMenu(item){
+            // console.log(item);
+            this.menuTab.map(item=>item.current=false)
+            item.current=true
+            this.mode=item.type//切换登录login或注册register
+        },
         //对表单的每一个字段进行验证
-        const submitForm=(formName=>{
-            refs[formName].validate((result) => {
+        submitForm(formName) {
+            this.$refs[formName].validate((result) => {
                 if (result) {
                     alert('submit!');
                 } else {
                     console.log('error submit!!');
-                    // console.log(process.env.NODE_ENV);
                     console.log(result);
                     return false;
                 }
             });
-        })
-        const toggleMenu=((item)=>{
-            // console.log(item);
-            menuTab.map(item=>item.current=false)
-            item.current=true
-            mode.value=item.type//切换登录login或注册register
-            //点击切换时清空表单数据
-            refs["ruleForm"].resetFields()
-        })
-        //获取验证码
-        const getCode=(()=>{
-            //判断如果邮箱不存在
-            if(ruleForm.username==''){
-                root.$message.error('邮箱不能为空！')
-                return false
-            }
-            const data={
-                username:ruleForm.username,
-                module:'login'
-            }
-            get_code(data).then((res)=>{//监听事件
-                root.$message.success(res.data.message)
-            }).catch((err)=>{
-                console.log(2);
-            })
-        })
-        return{
-            //导出！！！！！！！！！！！！！！！
-            mode,
-            menuTab,
-            ruleForm,
-            rules,
-            toggleMenu,
-            submitForm,
-            getCode
         }
     }
 }

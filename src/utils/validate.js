@@ -1,5 +1,4 @@
 //导出过滤特殊字符：
-//验证码
 const validate_inputValue = (s,type) =>{
     if(type=='email'){//验证邮箱
         var pattern = new RegExp("[`%~!#$^&*()=|{}':;',\\[\\]<>/?~！#￥……&*（）;—|{}【】‘；：”“'。，、？]")
