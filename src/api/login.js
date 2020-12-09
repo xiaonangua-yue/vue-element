@@ -22,6 +22,19 @@ export const get_code=(data)=>{
         data: data
     })
 }
-//登录
-
-//注册
+//登录//访问接口
+export const do_login=(data)=>{
+    return axios.request({
+        method: 'post',
+        url: '/login/',
+        data: data
+    })
+}
+//注册//访问接口
+export const do_register=(data)=>{
+    return axios.request({
+        method: 'post',
+        url: '/register/',
+        data: data
+    })
+}

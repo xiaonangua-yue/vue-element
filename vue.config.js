@@ -46,9 +46,10 @@ module.exports  = {
         //配代理请求
         // http://localhost:8010/api/getSms
         // http://www.web-jshtml.cn/productapi/api/getSms//替换为：
-        // http://www.web-jshtml.cn/productapi/getSms
+        // http://www.web-jshtml.cn/productapi/getSms       //没有token业务的接口
+        // http://www.web-jshtml.cn/productapi/token/getSms //有token业务的接口
             '/api':{
-                target:'http://www.web-jshtml.cn/productapi/',//目标接口
+                target:'http://www.web-jshtml.cn/productapi/token/',//目标接口
                 changeOrigin:true, //生成一个localhost:8010域名下的一个node服务器，帮你做代理
                 //重写url，去掉url以/api开头的为：http://www.web-jshtml.cn/productapi/getSms
                 pathRewrite:{

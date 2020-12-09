@@ -1,6 +1,6 @@
 import axios from "axios"
 import {Message} from "element-ui"
-const BASEURL=process.env.NODE_ENV==='development'?'/api':''
+const BASEURL=process.env.NODE_ENV==='development'?'/api':'' //api
 const http=axios.create({
   baseURL:BASEURL //http://localhost:8081/api/getSms/ 只要url中/api开头的都是接口请求
 })
