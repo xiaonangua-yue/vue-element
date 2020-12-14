@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 开启项目，路径改为：http://localhost:8081/promise.html -->
+    <h1>promise</h1>
+    <script>
+        //es6 promise的基本使用
+        // const promise=new Promise((resolve,reject)=>{
+        //     //业务流程-->ajax
+        //     // resolve(111)
+        //     reject(111)
+        // })
+        // promise.then(res=>{
+        //     console.log(res)
+        // }).catch(err=>{
+        //     console.log(err)
+        // })
+        //链式调用，解决异步回调地狱
+        const funa=(flag)=>{
+            return new Promise((resolve,reject)=>{
+                if(flag){
+                    console.log("第一个promise成功")
+                    resolve("第一个成功数据")
+                }else{
+                    console.log("第一个promise失败")
+                    reject("第一个失败数据")
+                }
+            })
+        }
+        const funb=(flag)=>{
+            return new Promise((resolve,reject)=>{
+                if(flag){
+                    console.log("第二个promise成功")
+                    resolve("第二个成功数据")
+                }else{
+                    console.log("第二个promise失败")
+                    reject("第二个失败数据")
+                }
+            })
+        }
+        const func=(flag)=>{
+            return new Promise((resolve,reject)=>{
+                if(flag){
+                    console.log("第三个promise成功")
+                    resolve("第三个成功数据")
+                }else{
+                    console.log("第三个promise失败")
+                    reject("第三个失败数据")
+                }
+            })
+        }
+        const fund=(flag)=>{
+            return new Promise((resolve,reject)=>{
+                if(flag){
+                    console.log("第四个promise成功")
+                    resolve("第四个成功数据")
+                }else{
+                    console.log("第四个promise失败")
+                    reject("第四个失败数据")
+                }
+            })
+        }
+        //不再一层一层嵌套直接 .then(res=>{})，值必须return返回数据
+        funa(true).then(res=>{
+            console.log(res)
+            return funb(true)//true监听成功的
+        }).then(res=>{
+            console.log(res)
+            return func(false)//false监听失败的
+        }).then(res=>{
+            console.log(res)
+        })
+        .catch(err=>{
+            console.log('xxx')
+            console.log(err)
+        })
+        
+        //all：多个promise执行，必须全部成功才能执行then，只要有一个失败就是catch
+        // Promise.all([funa(true),funb(true),func(true),fund(true)]).then(res=>{
+        //     console.log('aaa')//必须全部成功
+        // }).catch(err=>{
+        //     console.log('bbb')//只要有一个失败
+        // })
+
+        //rece（比赛）：哪个先执行完毕，后面的不管对错都放弃执行
+        Promise.race([funa(false),funb(true),func(true),fund(false)]).then(res=>{
+            console.log('ccc')//第一个先执行完毕的成功，其他的都不执行
+        }).catch(err=>{
+            console.log('ddd')//第一个先执行完毕的失败
+        })
+    </script>
+</body>
+</html>

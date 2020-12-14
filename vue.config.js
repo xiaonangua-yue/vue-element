@@ -20,6 +20,18 @@ module.exports  = {
 			}
         }
     },
+    //配置解析svg的loader
+    chainWebpack:(config)=>{
+        const svgRule = config.module.rule("svg");     
+        svgRule.uses.clear();     
+        svgRule       
+          .use("svg-sprite-loader")       
+          .loader("svg-sprite-loader")       
+          .options({         
+            symbolId: "icon-[name]",         
+            include: ["./src/icons"]       
+        }); 
+    },
     configureWebpack:(config)=>{
         config.resolve={
             //配置目录的别名
@@ -39,7 +51,7 @@ module.exports  = {
     //设置vue静态服务器代理。使用的是 http-proxy-middleware 这个模块（这个模块相当于是node.js的一个插件）。
     devServer:{
         // port:8010,//修改为8010，不存在跨域
-        port:8080,
+        port:8010,
         open:true,//启动项目会自动打开此浏览器
         // logLevel:'debug',//打印代理日志
         proxy:{

@@ -1,8 +1,25 @@
+//css文件入口，指定页面的风格，背景色，主题色......
 //先导入再使用，有先后顺序
+
+//引入信息管理页面导航的样式配置
+@import './config.scss';
+//修改elementui的侧边菜单样式文件
+@import './element.scss';
 //重置浏览器的默认全局样式
 @import './reset.scss';
+//常见的样式类
+.pull-right{float:right;}
+.pull-left{float:left;}
+//定义侧边菜单栏动画函数
+@mixin webkit($type,$value){
+    -webkit-#{$type}: $value;
+    -moz-#{$type}: $value;
+    -o-#{$type}: $value;
+    -ms-#{$type}: $value;
+}
 //主题的css样式
 // @import './theme.scss';
+
 // body{
 //     background-color:orange;
 // }

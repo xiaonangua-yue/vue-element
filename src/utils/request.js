@@ -1,6 +1,18 @@
 import axios from "axios"
 import {Message} from "element-ui"
-const BASEURL=process.env.NODE_ENV==='development'?'/api':'' //api
+import {getToken} from "./cookie"
+// const BASEURL=process.env.NODE_ENV==='development'?'/api':'' //api
+let BASEURL=null
+// const mock=true//使用本地的mock数据
+const mock=false//走后台代理
+if(mock){
+  //使用本地的mock数据
+  BASEURL=process.env.NODE_ENV==='development'?'':''
+}else{
+  //走后台代理
+  BASEURL=process.env.NODE_ENV==='development'?'/api':''
+}
+
 const http=axios.create({
   baseURL:BASEURL //http://localhost:8081/api/getSms/ 只要url中/api开头的都是接口请求
 })
@@ -10,7 +22,9 @@ const http=axios.create({
 http.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     //手动添加请求头(Request Headers)参数  token userId csrf
-    config.headers.token='xxxxx'
+    if(getToken()){
+      config.headers.token=getToken()//token的值
+    }
     // console.log("请求拦截参数",config.headers);
     return config;
   }, function (error) {
@@ -20,7 +34,7 @@ http.interceptors.request.use(function (config) {
 
 // Add a response interceptor添加响应拦截器
 http.interceptors.response.use(function (response) {
-  console.log(response)
+  // console.log(response)
     // 对响应数据做些什么 数据进行过滤
     if(response.data.resCode!=0){
       //依赖element-ui弹框提示服务器返回的错误信息

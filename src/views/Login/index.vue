@@ -44,7 +44,11 @@ import {get_code,do_login,do_register} from '@/api/login.js'//导入axios
 export default {
     setup(prop,{refs,root}){
 //----------------------生命周期---------------------
-
+        // onMounted(()=>{
+        //     get_code().then(res=>{
+        //         console.log(res)
+        //     })
+        // })
 //---------------data----------------
         const status_username=ref(false)
         const status_password=ref(false)
@@ -155,7 +159,7 @@ export default {
             refs[formName].validate((result) => {
                 if (result) {
                     //执行登录注册
-                    mode.value==='login'?doLogin():doRegister()
+                    mode.value==='login'? doLogin() : doRegister()
                 } else {
                     // console.log('error submit!!');
                     // console.log(process.env.NODE_ENV);
@@ -200,11 +204,12 @@ export default {
                         duration:3000//弹框会显示的毫秒数，设为0不会自动关闭
                     })
                 })
-                return false
+                // return false
             }
             //发送验证码时让按钮禁用并显示“发送中”
             // codeButtonStatus.value=true
             // codeButtonText.value='发送中'
+            console.log(111)
             setCodeButton({//使用封装的简洁
                 status:true,
                 text:'发送中'
@@ -268,18 +273,33 @@ export default {
             codeButtonStatus.value=status
             codeButtonText.value=text
         }
-        //执行登录（在login.js中设置访问接口）
+        //执行登录（在login.js中设置访问接口）-->//登录后跳转到首页
         const doLogin=()=>{
             const data={
                 username:ruleForm.username,
                 password:ruleForm.password,
                 code:ruleForm.code
             }
-            do_login(data).then(res=>{
+            root.$store.dispatch('app/login',data).then(res=>{
+                // console.log('--->',res)
                 root.$message.success(res.data.message)
+                //登录后跳转到首页
+                root.$router.push({
+                    name:'Home'
+                })
             }).catch(err=>{
-                
+
             })
+            //网络请求 改为vuex中的 actions通过mutations修改state中的数据
+            // do_login(data).then(res=>{
+            //     root.$message.success(res.data.message)
+            //     //登录后跳转到首页
+            //     root.$router.push({
+            //         name:'Home'
+            //     })
+            // }).catch(err=>{
+                
+            // })
         }
         //执行注册
         const doRegister=()=>{
@@ -305,13 +325,15 @@ export default {
             //封装输入框不同错误的不同弹框
             const _filed_arr=[
                 {filed:'username',flag:status_username.value,message:'邮箱格式不正确'},
-                {filed:'password',flag:status_password.value,message:'密码格式不正确'},
-                {filed:'passwordb',flag:status_passwordb.value,message:'重复密码与密码不符合'},
-            ].filter(item=>!item.flag)
+                {filed:'password',flag:status_password.value,message:'密码格式不正确'}
+            ]
+            if(mode.value==='register'){
+                _filed_arr.push({filed:'passwordb',flag:status_passwordb.value,message:'重复密码与密码不符合'})
+            }
             // console.log(_filed_arr)
             return{
                 result:status_username.value && status_password.value && status_passwordb.value,
-                filed:_filed_arr
+                filed:_filed_arr.filter(item=>!item.flag)
             }
         }
         //导出！！！！！！！！！！！！！！！

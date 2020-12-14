@@ -1,0 +1,45 @@
+//选中的二级菜单样式
+.el-submenu .el-menu-item{
+    font-size: 14px;
+    padding-left: 50px !important;
+    &.is-active{
+        background-color:$Menu_2 !important;
+    }
+}
+//选中的二级菜单所对应的一级菜单的样式
+li.el-submenu{
+    &.is-active.is-opened{
+        .el-submenu__title{
+            background-color:$Menu_1 !important;
+        }
+    }
+}
+//收缩状态修改一级菜单选中时背景色
+.close{
+    .el-submenu{
+        &.is-opened{
+            .el-submenu__title{
+                background-color: $Menu_1 !important;
+            }
+        }
+    }
+}
+.el-menu--vertical{
+    margin-left: -4px;
+    // 选中的二级背景色
+    .el-menu-item:hover{
+        background-color:$Menu_2 !important;
+    }
+    //文字的位置
+    .el-menu-item{
+        line-height: 55px;
+        font-size: 16px;
+    }
+    //菜单背景色
+    .el-menu{
+        background-color: #344A5F !important;
+    }
+}
+.el-submenu__title:hover{
+    background-color:$Menu_1 !important;
+}

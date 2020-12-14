@@ -1,7 +1,5 @@
 <template>
-    <div>
-        只是默认的首页内容
-    </div>
+    <div>信息列表</div>
 </template>
 <script>
 export default {
