@@ -47,7 +47,7 @@
                 <el-button type="danger" style="width:100%">搜索</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="success" style="width:50%" class="pull-right" @click="info_dailog=true">新增</el-button>
+                <el-button type="success" style="width:50%" class="pull-right" @click="info_dialog=true">新增</el-button>
             </el-col>
         </el-row>
 
@@ -88,14 +88,14 @@
         </el-row>
 
         <!-- 新增的弹框 -->
-        <el-dialog title="收货地址" :visible.sync="info_dailog" append-to-body>
-            111
-        </el-dialog>
+        <InfoDialog :info_dialog='info_dialog' />
     </div>
 </template>
 <script>
 import { reactive, ref } from '@vue/composition-api'
+import InfoDialog from './dialog/info'
 export default {
+    components:{InfoDialog},
     setup(){
 ////////////////////////数据////////////////////////////////
         //类型的默认数据
@@ -136,7 +136,7 @@ export default {
             }
         ])
         //新增弹框
-        const info_dailog =ref(false)
+        const info_dialog =ref(false)
 ////////////////////////methods//////////////////////////////
         const search_keyword=((value)=>{
             console.log(value)
@@ -146,7 +146,7 @@ export default {
         })
         return{
             //ref
-            category_value,date_value,search_key,search_input,info_dailog,
+            category_value,date_value,search_key,search_input,info_dialog,
             //reactive
             search_option,table_data,
             //methods
