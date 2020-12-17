@@ -47,7 +47,7 @@
                 <el-button type="danger" style="width:100%">搜索</el-button>
             </el-col>
             <el-col :span="4">
-                <el-button type="success" style="width:50%" class="pull-right" @click="info_dialog=true">新增</el-button>
+                <el-button type="success" style="width:50%" class="pull-right" @click="info_dialog=true">新增<p>{{info_dialog?"true":"false"}}</p></el-button>
             </el-col>
         </el-row>
 
@@ -88,7 +88,10 @@
         </el-row>
 
         <!-- 新增的弹框 -->
-        <InfoDialog :info_dialog='info_dialog' />
+        <!-- <InfoDialog :info_dialog.sync='info_dialog' @close='closeDialog'/> -->
+        <!-- 使用属性修饰符 ,用.sync-->
+        <InfoDialog :info_dialog.sync='info_dialog'/>
+        
     </div>
 </template>
 <script>
@@ -138,6 +141,9 @@ export default {
         //新增弹框
         const info_dialog =ref(false)
 ////////////////////////methods//////////////////////////////
+        // const closeDialog=((value)=>{
+        //     info_dialog.value=value
+        // })
         const search_keyword=((value)=>{
             console.log(value)
         })
