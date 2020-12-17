@@ -43,3 +43,25 @@ li.el-submenu{
 .el-submenu__title:hover{
     background-color:$Menu_1 !important;
 }
+//移除侧边nav的竖线
+.el-menu{
+    border-right: none;
+}
+//所有table表格的样式
+label,.el-input__inner{
+    color: #344A5F;
+}
+//修改table表格的样式
+div.el-table{
+    th,td{
+        text-align: center;
+        color: #344A5F;
+    }
+    th{
+        font-size: 14px;
+        font-weight: bold;
+    }
+    td{
+        font-size: 12px;
+    }
+}

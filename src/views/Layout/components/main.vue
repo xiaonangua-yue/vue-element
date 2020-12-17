@@ -15,6 +15,7 @@ export default {
     left: $NavWidth;
     right: 0;
     bottom: 0;
+    padding: 0 25px;
     border: 30px solid #F7f7F7;
     border-bottom: none;
     background-color: #fff;

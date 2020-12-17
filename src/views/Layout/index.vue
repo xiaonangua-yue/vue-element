@@ -5,7 +5,6 @@
     <LayoutHeader/>
     <LayoutNav/>
     <LayoutMain/>
-    
   </div>
 </template>
 

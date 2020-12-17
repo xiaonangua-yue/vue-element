@@ -8,7 +8,7 @@
                 <img src="../../../assets/a.jpg" alt="">
                 <div>管理员</div>
             </div>
-            <div class="pull-right header-icon" @click="exit" style="cursor:pointer">
+            <div class="pull-right header-icon-b" @click="exit" style="cursor:pointer">
                 <svg-icon iconName='exit' />
             </div>
         </div>
@@ -49,10 +49,13 @@ export default {
     box-shadow:0 3px 16px 0 rgba(0,0,0,.2);
     // -webkit-box-shadow:0 3px 16px 0 rgba(0,0,0,.2);
     .header-icon{
+        padding: 18px 0 0 25px;
         svg{
             font-size: 20px;
-            margin: 25px 25px 0;
         }
+    }
+    .header-icon-b{
+        padding: 18px 10px 0 18px;
     }
     .userinfo{
         height: $HeadHeigth;
@@ -62,9 +65,9 @@ export default {
         display: flex;
         line-height: $HeadHeigth;
         img{
-            width: 35px;
-            height: 35px;
-            margin: 20px 20px 0 0;
+            width: 30px;
+            height: 30px;
+            margin: 15px 15px 0 0;
             display: inline-block;
             border-radius: 50%;
         }

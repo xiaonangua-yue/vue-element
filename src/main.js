@@ -1,8 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-//导入路由权限限制
-import './router/permit.js'
+//导入路由权限限制  不能直接跳转，必须登录成功才能跳转
+// import './router/permit.js'
 
 import store from "./store/index.js";
 //导入element-ui
