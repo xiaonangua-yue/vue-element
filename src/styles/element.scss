@@ -65,3 +65,18 @@ div.el-table{
         font-size: 12px;
     }
 }
+//调整dialog新增模态框的内边距和其他样式
+.el-dialog__body{
+    padding: 30px 40px 30px !important;
+    .el-form-item:last-child{
+        margin-bottom: 0 !important;
+    }
+}
+.el-dialog__footer{
+    text-align: center;
+    padding-bottom: 37px;
+    button{
+        width: 125px !important;
+        margin: 0 15px;
+    }
+}

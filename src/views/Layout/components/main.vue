@@ -11,6 +11,7 @@ export default {
 <style lang="scss" scoped>
 #main-wrap{
     position: fixed;
+    overflow-y: auto;
     top: $HeadHeigth;
     left: $NavWidth;
     right: 0;
